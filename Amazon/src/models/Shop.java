@@ -2,16 +2,51 @@ package models;
 
 import Main.main;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.io.Serializable;
 
-public class Shop {
+public class Shop implements Serializable{
     public List<Ware> _waren = new ArrayList<Ware>();
+
+    public static final String filename = "artikel.bin";
 
     public Person _aktuellePerson = new Person();
 
-    public void warenGenerieren(){
+    public void warenGenerieren(String name){
+            if (Files.exists(Paths.get(name))){
+                warenEinlesen(filename);
+            }
+            else {
+                warenErstellen(filename);
+            }
+    }
+    public void warenEinlesen(String name){
+        try(FileInputStream fis = new FileInputStream(name); ObjectInputStream ois = new ObjectInputStream(fis)){
+            _waren = (List<Ware>)ois.readObject();
+        }
+        catch(IOException e){
+            System.out.println("Serialisierung hat nicht funktioniert!");
+        }
+        catch(ClassNotFoundException e){
+            System.out.println("Klasse Ware existiert nicht!");
+        }
+
+    }
+
+    public void warenErstellen(String name){
+
+        try{
+            Files.createFile(Paths.get(filename));
+        }catch (IOException e){
+            System.out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
+        }
+
 
         _waren.add(new Handy(315.00, "01", true, "Xiaomi Mi 9T", "Xiaomi",
                 "Super Smartphone (Made in China Nice)", "Galaxy Blue", "2019",
@@ -41,6 +76,13 @@ public class Shop {
                         "und der finstere Darth Vader ist ihnen dicht auf den Fersen.", "mp4", 12, "1977"));
         _waren.add(new Musik(1.29, "08", true, "TNT", "AC/DC",
                 "TNT ... Dynamite", "mp3", "AC/DC"));
+
+        try(FileOutputStream fos = new FileOutputStream(name); ObjectOutputStream oos = new ObjectOutputStream(fos)){
+            oos.writeObject(_waren);
+        }catch (IOException e){
+            System.out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
+        }
+
     }
 
     public String warenAusgeben(){
