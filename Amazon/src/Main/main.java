@@ -1,7 +1,13 @@
 package Main;
+
 import models.*;
 import models.Person.Geschlecht;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -12,12 +18,16 @@ public class main {
     private static Shop shop = new Shop();
     public static Person p = new Person();
     private static Mail mail = new Mail();
+    private static final String peopleFileName = "people.bin";
+    private static List<Person> _people = new ArrayList<Person>();
+    private static final Person _admin = new Person(null, null, "admin", "dev", null);
 
     public static void main(String[] args) throws InterruptedException {
 
         char answer;
         char antwort, antwort2, antwort3;
         boolean registrierungErfolgreich, anmeldungErfolgreich;
+        synchronizePersonDatabase();
 
         do {
             registrierungErfolgreich = false;
@@ -40,7 +50,7 @@ public class main {
                                 anmeldevorgang();
                                 break;
                             case 'n':
-                                anmeldungErfolgreich = true;
+                                anmeldungErfolgreich = false;
                                 epischerCountdown();
                             default:
                                 out.println("Tut mir leid, aber Sie haben einen falschen Buchstaben eingegeben");
@@ -70,7 +80,7 @@ public class main {
                     epischerCountdown();
                     break;
                 case 's':
-                    shop.warenGenerieren(Shop.filename);
+                    shop.warenGenerieren(Shop.articleFileName);
                     out.println(shop.warenAusgeben());
                     do {
 
@@ -180,9 +190,11 @@ public class main {
         } while (geschl == false);
         Geschlecht geschlecht = Geschlecht.valueOf(geschleht);
         p.set_geschlecht(geschlecht);
-
-        out.print("Bitte geben Sie Ihre Email-Adresse ein: ");
-        String email = reader.next();
+        String email;
+        do {
+            out.print("Bitte geben Sie Ihre Email-Adresse ein: ");
+            email = reader.next();
+        }while(!p.emailIsOK(email));
         p.set_email(email);
         boolean uebereinstimmung = false;
         String pw1 = null;
@@ -270,7 +282,7 @@ public class main {
     // Der Anmeldevorgang ist eigentlich nicht funktionsfähig, weil wir keine Datenbank von Benutzern haben
     // Wir haben die Methode trotzdem behalten, damit wir uns nicht jedes Mal neu Registrieren mussten
     public static void anmeldevorgang() {
-        out.print("Geben Sie Ihren Namen ein: ");
+        out.print("Geben Sie Ihre Emailadresse ein: ");
         String antwort12 = reader.next();
         if (antwort12.equals("admin")) {
             out.print("Servus Amazon Chef! Wir brauchen dein PW: ");
@@ -291,4 +303,37 @@ public class main {
         p.set_passwort("david");
 
     }
+
+    public static void synchronizePersonDatabase() {
+        if (Files.exists(Paths.get(peopleFileName))) {
+            importPeople(peopleFileName);
+        } else {
+            createPeople(peopleFileName);
+        }
+    }
+
+    public static void importPeople(String fileName) {
+        try (FileInputStream fis = new FileInputStream(fileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
+            _people = (List<Person>)ois.readObject();
+        } catch (IOException e) {
+            out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Klasse Person existiert nicht!");
+        }
+    }
+
+    public static void createPeople(String fileName) {
+        try {
+            Files.createFile(Paths.get(fileName));
+        } catch (IOException e) {
+            System.out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
+        }
+
+        try (FileOutputStream fos = new FileOutputStream(fileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(_admin);
+        } catch (IOException e) {
+            out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
+        }
+    }
+
 }

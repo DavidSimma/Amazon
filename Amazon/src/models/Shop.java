@@ -4,7 +4,6 @@ import Main.main;
 
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Date;
@@ -14,20 +13,20 @@ import java.io.Serializable;
 public class Shop implements Serializable {
     public List<Ware> _waren = new ArrayList<Ware>();
 
-    public static final String filename = "artikel.bin";
+    public static final String articleFileName = "artikel.bin";
 
     public Person _aktuellePerson = new Person();
 
     public void warenGenerieren(String name) {
         if (Files.exists(Paths.get(name))) {
-            warenEinlesen(filename);
+            warenEinlesen(articleFileName);
         } else {
-            warenErstellen(filename);
+            warenErstellen(articleFileName);
         }
     }
 
-    public void warenEinlesen(String name) {
-        try (FileInputStream fis = new FileInputStream(name); ObjectInputStream ois = new ObjectInputStream(fis)) {
+    public void warenEinlesen(String fileName) {
+        try (FileInputStream fis = new FileInputStream(fileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
             _waren = (List<Ware>) ois.readObject();
         } catch (IOException e) {
             System.out.println("Serialisierung hat nicht funktioniert!");
@@ -37,10 +36,10 @@ public class Shop implements Serializable {
 
     }
 
-    public void warenErstellen(String name) {
+    public void warenErstellen(String fileName) {
 
         try {
-            Files.createFile(Paths.get(filename));
+            Files.createFile(Paths.get(fileName));
         } catch (IOException e) {
             System.out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
         }
@@ -75,7 +74,7 @@ public class Shop implements Serializable {
         _waren.add(new Musik(1.29, "08", true, "TNT", "AC/DC",
                 "TNT ... Dynamite", "mp3", "AC/DC"));
 
-        try (FileOutputStream fos = new FileOutputStream(name); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+        try (FileOutputStream fos = new FileOutputStream(fileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(_waren);
         } catch (IOException e) {
             System.out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
