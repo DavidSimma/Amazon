@@ -225,7 +225,11 @@ public class main {
                     break;
             }
         } while (auswahlAdresse != 'n');
-
+        try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(p);
+        } catch (IOException e) {
+            out.println("Registrierung nicht erfolgreich, probieren Sie es erneut!");
+        }
     }
 
     public static Adresse adresseEingeben() {
@@ -278,9 +282,6 @@ public class main {
         System.exit(0);
     }
 
-
-    // Der Anmeldevorgang ist eigentlich nicht funktionsfähig, weil wir keine Datenbank von Benutzern haben
-    // Wir haben die Methode trotzdem behalten, damit wir uns nicht jedes Mal neu Registrieren mussten
     public static void anmeldevorgang() {
         out.print("Geben Sie Ihre Emailadresse ein: ");
         String antwort12 = reader.next();
@@ -294,14 +295,6 @@ public class main {
         } else {
             epischerCountdown();
         }
-
-        // Test-Daten
-        p.set_vorname("Vorname");
-        p.set_nachname("Nachname");
-        p.set_geschlecht(Geschlecht.n);
-        p.set_email("davidseidl2002@gmail.com");
-        p.set_passwort("david");
-
     }
 
     public static void synchronizePersonDatabase() {
