@@ -1,7 +1,6 @@
 package Main;
 
 import models.*;
-import models.Person.Geschlecht;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -20,7 +19,7 @@ public class main {
     private static Mail mail = new Mail();
     private static final String peopleFileName = "people.bin";
     private static List<Person> _people = new ArrayList<Person>();
-    private static final Person _admin = new Person(null, null, "admin", "dev", null);
+    private static final Person _admin = new Person("", "", "admin", "dev", Geschlecht.n);
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -28,6 +27,8 @@ public class main {
         char antwort, antwort2, antwort3;
         boolean registrierungErfolgreich, anmeldungErfolgreich;
         synchronizePersonDatabase();
+
+        out.println(_people.toString());
 
         do {
             registrierungErfolgreich = false;
@@ -177,7 +178,7 @@ public class main {
         p.set_vorname(vn);
         out.print("Geben Sie Ihren Nachnamen ein: ");
         String nn = reader.next();
-        p.set_vorname(nn);
+        p.set_nachname(nn);
         boolean geschl;
         String geschleht;
         do {
@@ -226,7 +227,8 @@ public class main {
             }
         } while (auswahlAdresse != 'n');
         try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(p);
+            _people.add(p);
+            oos.writeObject(_people);
         } catch (IOException e) {
             out.println("Registrierung nicht erfolgreich, probieren Sie es erneut!");
         }
@@ -283,18 +285,17 @@ public class main {
     }
 
     public static void anmeldevorgang() {
-        out.print("Geben Sie Ihre Emailadresse ein: ");
-        String antwort12 = reader.next();
-        if (antwort12.equals("admin")) {
-            out.print("Servus Amazon Chef! Wir brauchen dein PW: ");
-            String pw12 = reader.next();
-            if (pw12.equals("dev")) {
-            } else {
-                epischerCountdown();
-            }
-        } else {
-            epischerCountdown();
-        }
+        String email, pw;
+        do {
+            do {
+                out.print("Geben Sie Ihre Emailadresse ein: ");
+                email = reader.next();
+            }while (!emailIsAvailable(email));
+            do {
+                out.print("Bitte geben Sie Ihr Passwort ein: ");
+                pw = reader.next();
+            }while(!pwIsAvailable(pw));
+        }while (!loginSuccesful(p));
     }
 
     public static void synchronizePersonDatabase() {
@@ -311,7 +312,7 @@ public class main {
         } catch (IOException e) {
             out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
         } catch (ClassNotFoundException e) {
-            System.out.println("Klasse Person existiert nicht!");
+            out.println("Klasse Person existiert nicht!");
         }
     }
 
@@ -319,14 +320,37 @@ public class main {
         try {
             Files.createFile(Paths.get(fileName));
         } catch (IOException e) {
-            System.out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
+            out.println("Datei konnte nicht erzeugt werden!");
         }
-
         try (FileOutputStream fos = new FileOutputStream(fileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(_admin);
+            _people.add(_admin);
+            oos.writeObject(_people);
         } catch (IOException e) {
-            out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
+            out.println("Admin konnte nicht erzeugt werden!");
         }
+    }
+
+    public static boolean emailIsAvailable(String email){
+        for(Person u : _people){
+            if (u.get_email().equals(email)){
+                p = u;
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean pwIsAvailable(String pw){
+        if (p.get_passwort().equals(pw)){
+                return true;
+            }
+        return false;
+    }
+    public static boolean loginSuccesful(Person person){
+        if(emailIsAvailable(person.get_email()) && pwIsAvailable(person.get_passwort())){
+            return true;
+        }
+        out.println("EMail und/oder Passwort falsch!");
+        return false;
     }
 
 }

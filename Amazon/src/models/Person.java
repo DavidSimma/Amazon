@@ -10,10 +10,6 @@ public class Person implements Serializable {
     private String _vorname, _nachname, _email, _passwort;
     private Geschlecht _geschlecht;
 
-    public enum Geschlecht {
-        m, w, n;
-    }
-
     private Warenkorb _warenkorb = new Warenkorb();
 
 

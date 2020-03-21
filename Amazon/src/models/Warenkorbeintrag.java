@@ -1,6 +1,8 @@
 package models;
 
-public class Warenkorbeintrag {
+import java.io.Serializable;
+
+public class Warenkorbeintrag implements Serializable {
     private int _menge;
     private Ware _ware;
 

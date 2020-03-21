@@ -1,9 +1,10 @@
 package models;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Warenkorb {
+public class Warenkorb implements Serializable {
     private List<Warenkorbeintrag> _waren = new ArrayList<Warenkorbeintrag>();
     private List<Warenkorbeintrag> _gefundeneWaren = new ArrayList<Warenkorbeintrag>();
     private double _preis = 0;
