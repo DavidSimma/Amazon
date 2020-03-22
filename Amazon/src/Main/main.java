@@ -23,12 +23,16 @@ public class main {
 
     public static void main(String[] args) throws InterruptedException {
 
-        char answer;
+        char answer, löschen;
         char antwort, antwort2, antwort3;
         boolean registrierungErfolgreich, anmeldungErfolgreich;
         synchronizePersonDatabase();
 
-        out.println(_people.toString());
+        for (Person s : _people){
+            out.println(s.toString());
+            out.println(s.get_adressen().toString());
+            out.println(s.get_warenkorb().toString());
+        }
 
         do {
             registrierungErfolgreich = false;
@@ -72,6 +76,7 @@ public class main {
 
             out.println("s ... Shop öffnen");
             out.println("w ... Warenkorb öffnen");
+            out.println("l ... Accout löschen");
             out.println("e ... Seite verlassen");
             out.print("Antwort: ");
             answer = reader.next().charAt(0);
@@ -161,9 +166,23 @@ public class main {
                     out.println(p.get_warenkorb());
 
                     break;
-                default:
-                    out.println("Tut mir leid, aber Sie haben einen falschen Buchstaben eingegeben");
-                    break;
+                case 'l':
+                    do {
+                        out.print("Wollen Sie den Account wirklich löschen? [j/n]");
+                        löschen = reader.next().toLowerCase().charAt(0);
+                        switch (löschen) {
+                            case 'j':
+                                _people.remove(p);
+                                answer = 'e';
+                                break;
+                            case 'n':
+
+                                break;
+                            default:
+                                out.println("Tut mir leid, aber Sie haben einen falschen Buchstaben eingegeben");
+                                break;
+                        }
+                    }while (löschen != 'j' || löschen != 'n');
             }
         } while (answer != 'e');
 
