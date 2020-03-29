@@ -28,11 +28,14 @@ public class main {
         boolean registrierungErfolgreich, anmeldungErfolgreich;
         synchronizePersonDatabase();
 
+        /* zur Kontrolle...
         for (Person s : _people){
             out.println(s.toString());
             out.println(s.get_adressen().toString());
             out.println(s.get_warenkorb().toString());
         }
+        */
+
 
         do {
             registrierungErfolgreich = false;
