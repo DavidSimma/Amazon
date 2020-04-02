@@ -89,7 +89,7 @@ public class main {
                     epischerCountdown();
                     break;
                 case 's':
-                    shop.warenGenerieren(Shop.articleFileName);
+                    shop.warenGenerieren();
                     out.println(shop.warenAusgeben());
                     do {
 
