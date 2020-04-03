@@ -89,7 +89,12 @@ public class main {
                     epischerCountdown();
                     break;
                 case 's':
+<<<<<<< HEAD
+                    // der Parameterr ist nicht notwendig (siehe Shop.java)
+                    shop.warenGenerieren(Shop.articleFileName);
+=======
                     shop.warenGenerieren();
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
                     out.println(shop.warenAusgeben());
                     do {
 
