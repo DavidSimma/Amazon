@@ -17,7 +17,9 @@ public class Shop implements Serializable {
 
     public Person _aktuellePerson = new Person();
 
+    // der Parameter name ist nicht notwendig
     public void warenGenerieren(String name) {
+        //          hier articleFileName verwenden
         if (Files.exists(Paths.get(name))) {
             warenEinlesen(articleFileName);
         } else {
@@ -25,10 +27,14 @@ public class Shop implements Serializable {
         }
     }
 
+    // Parameter nicht notwendig
     public void warenEinlesen(String fileName) {
         try (FileInputStream fis = new FileInputStream(fileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
             _waren = (List<Ware>) ois.readObject();
         } catch (IOException e) {
+            // ihr solltet die Fehlermeldung nicht hier ausgeben, sondern an den Aufrufer weiterleiten
+            //  kann über throws erfolgen (public void warenEinlesen(String fileName) throws IOException, ClassNotFoundException)
+            // jetzt muss der Aufrufer sich darum kümmern (am besten im Hauptprogramm)
             System.out.println("Serialisierung hat nicht funktioniert!");
         } catch (ClassNotFoundException e) {
             System.out.println("Klasse Ware existiert nicht!");
@@ -36,11 +42,13 @@ public class Shop implements Serializable {
 
     }
 
+    // Parameter nicht notwendig
     public void warenErstellen(String fileName) {
 
         try {
             Files.createFile(Paths.get(fileName));
         } catch (IOException e) {
+            // Exceptionhandling: siehe warenEinlesen
             System.out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
         }
 
