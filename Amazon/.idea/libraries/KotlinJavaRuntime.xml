@@ -19,9 +19,9 @@
       <root url="jar://$KOTLIN_BUNDLED$/lib/kotlin-stdlib-jdk8-sources.jar!/" />
       <root url="file://$KOTLIN_BUNDLED$/lib" />
     </SOURCES>
-    <jarDirectory url="file://$KOTLIN_BUNDLED$/lib" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/../lib" recursive="false" />
+    <jarDirectory url="file://$KOTLIN_BUNDLED$/lib" recursive="false" />
     <jarDirectory url="file://$KOTLIN_BUNDLED$/lib" recursive="false" type="SOURCES" />
   </library>
 </component>
