@@ -28,13 +28,13 @@ public class main {
         boolean registrierungErfolgreich, anmeldungErfolgreich;
         synchronizePersonDatabase();
 
-
+        /* zur Kontrolle...
         for (Person s : _people){
             out.println(s.toString());
             out.println(s.get_adressen().toString());
             out.println(s.get_warenkorb().toString());
-            out.println(s.get_warenkorb().getWaren().toString());
         }
+        */
 
 
         do {
@@ -89,11 +89,15 @@ public class main {
                     epischerCountdown();
                     break;
                 case 's':
+<<<<<<< HEAD
+                    // der Parameterr ist nicht notwendig (siehe Shop.java)
+                    shop.warenGenerieren(Shop.articleFileName);
+=======
                     shop.warenGenerieren();
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
                     out.println(shop.warenAusgeben());
                     do {
 
-                        out.println(shop.get_aktuellePerson());
 
                         out.println("s ... Nach Ware Suchen");
                         out.println("w ... Warenkorb öffnen");
@@ -104,8 +108,8 @@ public class main {
                         switch (answer) {
                             case 'w':
 
-                                out.println(p.get_warenkorb());
-                                out.println(p.get_warenkorb().getWaren());
+                                out.println(shop.get_aktuellePerson().get_warenkorb());
+                                out.println(shop.get_aktuellePerson().get_warenkorb().getWaren());
                                 do {
                                     out.println("b ... Bestellvorgang");
                                     out.println("x ... Warenkorb verlassen");
@@ -122,14 +126,9 @@ public class main {
                                             } catch (Exception e) {
                                                 e.printStackTrace();
                                             }
-                                            for (Warenkorbeintrag wke : p.get_warenkorb().getWaren()){
-                                                p.get_warenkorb().removeWaren(wke);
-                                            }
-
-                                            personAbspeichern();
                                             break;
                                         case 'x':
-                                            out.println("Sie werden jetzt zur Hauptseite zurückgeleitet...");
+                                            out.println("Sie werden jtzt zur Hauptseite zurückgeleitet...");
                                             Thread.sleep(2000);
                                             clearConsole();
                                             break;
@@ -154,7 +153,7 @@ public class main {
                                 out.print("Geben Sie die Menge, der hinzuzufügenden Artikel ein: ");
                                 anzahl = reader.nextInt();
                                 shop.wareInWarenkorbVerschieben(name, anzahl);
-                                personAbspeichern();
+
                                 break;
 
                             case 's':
@@ -254,23 +253,11 @@ public class main {
                     break;
             }
         } while (auswahlAdresse != 'n');
-        personAbspeichern(p);
-    }
-
-    public static void personAbspeichern(){
         try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            _people.add(p);
             oos.writeObject(_people);
         } catch (IOException e) {
-            out.println("Personen konnte nicht abgespeichert werden!");
-        }
-    }
-
-    public static void personAbspeichern(Person person){
-        try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            _people.add(person);
-            oos.writeObject(_people);
-        } catch (IOException e) {
-            out.println("Personen konnte nicht abgespeichert werden!");
+            out.println("Registrierung nicht erfolgreich, probieren Sie es erneut!");
         }
     }
 
