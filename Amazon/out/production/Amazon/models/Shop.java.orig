@@ -15,16 +15,32 @@ public class Shop implements Serializable {
 
     private static final String articleFileName = "artikel.bin";
 
+    public Person _aktuellePerson = new Person();
+
+<<<<<<< HEAD
+    // der Parameter name ist nicht notwendig
+    public void warenGenerieren(String name) {
+        //          hier articleFileName verwenden
+        if (Files.exists(Paths.get(name))) {
+            warenEinlesen(articleFileName);
+=======
     public void warenGenerieren() {
         if (Files.exists(Paths.get(articleFileName))) {
             warenEinlesen();
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
         } else {
             warenErstellen();
         }
     }
 
+<<<<<<< HEAD
+    // Parameter nicht notwendig
+    public void warenEinlesen(String fileName) {
+        try (FileInputStream fis = new FileInputStream(fileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
+=======
     public void warenEinlesen() {
         try (FileInputStream fis = new FileInputStream(articleFileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
             _waren = (List<Ware>) ois.readObject();
         } catch (IOException e) {
             // ihr solltet die Fehlermeldung nicht hier ausgeben, sondern an den Aufrufer weiterleiten
@@ -37,7 +53,12 @@ public class Shop implements Serializable {
 
     }
 
+<<<<<<< HEAD
+    // Parameter nicht notwendig
+    public void warenErstellen(String fileName) {
+=======
     public void warenErstellen() {
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
 
         try {
             Files.createFile(Paths.get(articleFileName));
@@ -91,7 +112,7 @@ public class Shop implements Serializable {
     public List<Ware> nachWarenSuchen(String warenName) {
         List<Ware> gefundeneWaren = new ArrayList<Ware>();
         for (Ware w : _waren) {
-            if (w.get_name().toLowerCase().contains(warenName.toLowerCase())) {
+            if (w.get_name().contains(warenName)) {
                 gefundeneWaren.add(w);
             }
         }
@@ -99,12 +120,12 @@ public class Shop implements Serializable {
     }
 
     public Person get_aktuellePerson() {
-        return main.p;
+        return _aktuellePerson;
     }
 
     public void wareInWarenkorbVerschieben(String warenName, int menge) {
         boolean inWarenKorbVorhanden = false;
-        for (Warenkorbeintrag wke : main.p.get_warenkorb().getWaren()) {
+        for (Warenkorbeintrag wke : _aktuellePerson.get_warenkorb().getWaren()) {
             if (wke.get_ware().get_name().equals(warenName)) {
 
                 wke.set_menge(wke.get_menge() + menge);
@@ -115,7 +136,7 @@ public class Shop implements Serializable {
             for (Ware w : _waren) {
                 if (w.get_name().equals(warenName)) {
 
-                    main.p.get_warenkorb().getWaren().add(new Warenkorbeintrag(menge, w));
+                    _aktuellePerson.get_warenkorb().getWaren().add(new Warenkorbeintrag(menge, w));
                 }
             }
         }
