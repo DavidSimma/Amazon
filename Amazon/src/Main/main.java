@@ -172,7 +172,7 @@ public class main {
                     break;
                 case 'w':
                     out.println(p.get_warenkorb().toString());
-                    out.println(p.get_warenkorb());
+                    out.println(p.get_warenkorb().getWaren().toString());
 
                     break;
                 case 'l':
