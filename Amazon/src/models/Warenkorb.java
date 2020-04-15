@@ -38,7 +38,7 @@ public class Warenkorb implements Serializable {
     }
 
     public double gesamtpreis() {
-
+        _preis = 0;
         for (Warenkorbeintrag w : _waren) {
             _preis += (w.get_ware().get_preis() * w.get_menge());
         }
@@ -46,6 +46,7 @@ public class Warenkorb implements Serializable {
     }
 
     public int gesamtWarenMenge() {
+        _gesamtMenge = 0;
         for (Warenkorbeintrag w : _waren) {
             _gesamtMenge += w.get_menge();
         }
