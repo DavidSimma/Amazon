@@ -17,16 +17,30 @@ public class Shop implements Serializable {
 
     public Person _aktuellePerson = new Person();
 
+<<<<<<< HEAD
+    // der Parameter name ist nicht notwendig
+    public void warenGenerieren(String name) {
+        //          hier articleFileName verwenden
+        if (Files.exists(Paths.get(name))) {
+            warenEinlesen(articleFileName);
+=======
     public void warenGenerieren() {
         if (Files.exists(Paths.get(articleFileName))) {
             warenEinlesen();
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
         } else {
             warenErstellen();
         }
     }
 
+<<<<<<< HEAD
+    // Parameter nicht notwendig
+    public void warenEinlesen(String fileName) {
+        try (FileInputStream fis = new FileInputStream(fileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
+=======
     public void warenEinlesen() {
         try (FileInputStream fis = new FileInputStream(articleFileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
             _waren = (List<Ware>) ois.readObject();
         } catch (IOException e) {
             // ihr solltet die Fehlermeldung nicht hier ausgeben, sondern an den Aufrufer weiterleiten
@@ -39,7 +53,12 @@ public class Shop implements Serializable {
 
     }
 
+<<<<<<< HEAD
+    // Parameter nicht notwendig
+    public void warenErstellen(String fileName) {
+=======
     public void warenErstellen() {
+>>>>>>> b00442152d5aa73485d2e3cd419127479c2c51b3
 
         try {
             Files.createFile(Paths.get(articleFileName));
