@@ -93,9 +93,6 @@ public class main {
                     shop.warenGenerieren();
                     out.println(shop.warenAusgeben());
                     do {
-
-                        out.println(shop.get_aktuellePerson());
-
                         out.println("s ... Nach Ware Suchen");
                         out.println("w ... Warenkorb öffnen");
                         out.println("v ... Ware in Warenkorb verschieben");
@@ -121,7 +118,7 @@ public class main {
                                                         "kleinAmazonSuupport", "Transaktionsbestätigung",
                                                         "Ihre Transaktion wurde erfolgreich abgesendet!");
                                             } catch (Exception e) {
-                                                e.printStackTrace();
+                                                out.println("Bestellvorgang fehlgeschlagen");
                                             }
                                             for (Warenkorbeintrag wke : p.get_warenkorb().getWaren()){
                                                 p.get_warenkorb().removeWaren(wke);

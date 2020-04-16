@@ -34,7 +34,7 @@ public class Mail {
     }
 
     public void send(String senderMail, String senderName, String subject, String message) throws MessagingException, UnsupportedEncodingException {
-        if(mailSession == null){
+        if (mailSession == null) {
             throw new IllegalStateException("Sie müssen sich zuerst einloggen");
         }
         MimeMessage msg = new MimeMessage(mailSession);
@@ -50,10 +50,16 @@ public class Mail {
 
         msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(main.p.get_email(), false));
         System.out.println("Versende Email ...");
-        Transport.send(msg);
-        System.out.println("Email wurde erfolgreich versendet!");
+        System.out.println("Email konnte NICHT versendet werden!");
+        /*
+        try {
+            Transport.send(msg);
+            System.out.println("Email wurde erfolgreich versendet!");
+        } catch (Exception e) {
+            System.out.println("Email konnte Nicht versendet werden!");
+        }
+
+         */
 
     }
-
-
 }
