@@ -1,6 +1,7 @@
 package models;
 
 import static java.lang.System.out;
+
 import Main.*;
 
 import java.util.Scanner;
@@ -32,7 +33,7 @@ public class Login {
         do {
             out.print("Bitte geben Sie Ihre Email-Adresse ein: ");
             email = reader.next();
-        }while(!main.p.emailIsOK(email));
+        } while (!main.p.emailIsOK(email));
         main.p.set_email(email);
         boolean uebereinstimmung = false;
         String pw1 = null;
@@ -89,31 +90,33 @@ public class Login {
             do {
                 out.print("Geben Sie Ihre Emailadresse ein: ");
                 email = reader.next();
-            }while (!emailIsAvailable(email));
+            } while (!emailIsAvailable(email));
             do {
                 out.print("Bitte geben Sie Ihr Passwort ein: ");
                 pw = reader.next();
-            }while(!pwIsAvailable(pw));
-        }while (!loginSuccesful(main.p));
+            } while (!pwIsAvailable(pw));
+        } while (!loginSuccesful(main.p));
     }
 
-    public static boolean emailIsAvailable(String email){
-        for(Person u : FileIOManagement._people){
-            if (u.get_email().equals(email)){
+    public static boolean emailIsAvailable(String email) {
+        for (Person u : FileIOManagement._people) {
+            if (u.get_email().equals(email)) {
                 main.p = u;
                 return true;
             }
         }
         return false;
     }
-    public static boolean pwIsAvailable(String pw){
-        if (main.p.get_passwort().equals(pw)){
+
+    public static boolean pwIsAvailable(String pw) {
+        if (main.p.get_passwort().equals(pw)) {
             return true;
         }
         return false;
     }
-    public static boolean loginSuccesful(Person person){
-        if(emailIsAvailable(person.get_email()) && pwIsAvailable(person.get_passwort())){
+
+    public static boolean loginSuccesful(Person person) {
+        if (emailIsAvailable(person.get_email()) && pwIsAvailable(person.get_passwort())) {
             return true;
         }
         out.println("EMail und/oder Passwort falsch!");

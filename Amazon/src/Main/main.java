@@ -186,7 +186,7 @@ public class main {
                                 out.println("Tut mir leid, aber Sie haben einen falschen Buchstaben eingegeben");
                                 break;
                         }
-                    }while (löschen != 'j' || löschen != 'n');
+                    } while (löschen != 'j' || löschen != 'n');
             }
         } while (answer != 'e');
 
@@ -223,9 +223,6 @@ public class main {
         out.println(" ... bye");
         System.exit(0);
     }
-
-
-
 
 
 }

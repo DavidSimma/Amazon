@@ -26,7 +26,7 @@ public class FileIOManagement {
 
     public static void importPeople(String fileName) {
         try (FileInputStream fis = new FileInputStream(fileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
-            _people = (List<Person>)ois.readObject();
+            _people = (List<Person>) ois.readObject();
         } catch (IOException e) {
             out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
         } catch (ClassNotFoundException e) {
@@ -47,7 +47,8 @@ public class FileIOManagement {
             out.println("Admin konnte nicht erzeugt werden!");
         }
     }
-    public static void personAbspeichern(){
+
+    public static void personAbspeichern() {
         try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(_people);
         } catch (IOException e) {
@@ -55,7 +56,7 @@ public class FileIOManagement {
         }
     }
 
-    public static void personAbspeichern(Person person){
+    public static void personAbspeichern(Person person) {
         try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             _people.add(person);
             oos.writeObject(_people);
