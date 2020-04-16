@@ -13,7 +13,7 @@ import static java.lang.System.out;
 
 public class main {
 
-    private static Scanner reader = new Scanner(System.in);
+    private static Scanner reader = new Scanner(System.in).useDelimiter("\\n");
     private static Shop shop = new Shop();
     public static Person p = new Person();
     private static Mail mail = new Mail();
