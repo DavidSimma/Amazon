@@ -99,7 +99,7 @@ public class Login {
     }
 
     public static boolean emailIsAvailable(String email) {
-        for (Person u : FileIOManagement._people) {
+        for (Person u : FileIOManagement.people) {
             if (u.get_email().equals(email)) {
                 main.p = u;
                 return true;

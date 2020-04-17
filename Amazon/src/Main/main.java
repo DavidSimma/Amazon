@@ -2,11 +2,6 @@ package Main;
 
 import models.*;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 import static java.lang.System.out;
@@ -176,7 +171,7 @@ public class main {
                         löschen = reader.next().toLowerCase().charAt(0);
                         switch (löschen) {
                             case 'j':
-                                FileIOManagement._people.remove(p);
+                                FileIOManagement.people.remove(p);
                                 answer = 'e';
                                 break;
                             case 'n':

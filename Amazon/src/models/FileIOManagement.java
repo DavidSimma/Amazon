@@ -1,7 +1,5 @@
 package models;
 
-import Main.*;
-
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -13,7 +11,7 @@ import static java.lang.System.out;
 public class FileIOManagement {
 
     private static final String peopleFileName = "people.bin";
-    public static List<Person> _people = new ArrayList<Person>();
+    public static List<Person> people = new ArrayList<Person>();
     private static final Person _admin = new Person("", "", "admin", "dev", Geschlecht.n);
 
     public static void synchronizePersonDatabase() {
@@ -26,7 +24,7 @@ public class FileIOManagement {
 
     public static void importPeople(String fileName) {
         try (FileInputStream fis = new FileInputStream(fileName); ObjectInputStream ois = new ObjectInputStream(fis)) {
-            _people = (List<Person>) ois.readObject();
+            people = (List<Person>) ois.readObject();
         } catch (IOException e) {
             out.println("Etwas ist schief gelaufen! Bitte wenden Sie sich an den Callcenter-Support!");
         } catch (ClassNotFoundException e) {
@@ -41,8 +39,8 @@ public class FileIOManagement {
             out.println("Datei konnte nicht erzeugt werden!");
         }
         try (FileOutputStream fos = new FileOutputStream(fileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            _people.add(_admin);
-            oos.writeObject(_people);
+            people.add(_admin);
+            oos.writeObject(people);
         } catch (IOException e) {
             out.println("Admin konnte nicht erzeugt werden!");
         }
@@ -50,7 +48,7 @@ public class FileIOManagement {
 
     public static void personAbspeichern() {
         try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            oos.writeObject(_people);
+            oos.writeObject(people);
         } catch (IOException e) {
             out.println("Personen konnte nicht abgespeichert werden!");
         }
@@ -58,8 +56,8 @@ public class FileIOManagement {
 
     public static void personAbspeichern(Person person) {
         try (FileOutputStream fos = new FileOutputStream(peopleFileName); ObjectOutputStream oos = new ObjectOutputStream(fos)) {
-            _people.add(person);
-            oos.writeObject(_people);
+            people.add(person);
+            oos.writeObject(people);
         } catch (IOException e) {
             out.println("Personen konnte nicht abgespeichert werden!");
         }
