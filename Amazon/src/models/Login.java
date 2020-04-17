@@ -8,15 +8,16 @@ import java.util.Scanner;
 
 public class Login {
     private static Scanner reader = new Scanner(System.in).useDelimiter("\\n");
+    public static Person p = new Person();
 
     public static void registriervorgang() {
 
         out.print("Geben Sie Ihren Vornamen ein: ");
         String vn = reader.next();
-        main.p.set_vorname(vn);
+        p.set_vorname(vn);
         out.print("Geben Sie Ihren Nachnamen ein: ");
         String nn = reader.next();
-        main.p.set_nachname(nn);
+        p.set_nachname(nn);
         boolean geschl;
         String geschleht;
         do {
@@ -28,13 +29,13 @@ public class Login {
             }
         } while (geschl == false);
         Geschlecht geschlecht = Geschlecht.valueOf(geschleht);
-        main.p.set_geschlecht(geschlecht);
+        p.set_geschlecht(geschlecht);
         String email;
         do {
             out.print("Bitte geben Sie Ihre Email-Adresse ein: ");
             email = reader.next();
-        } while (!main.p.emailIsOK(email));
-        main.p.set_email(email);
+        } while (!p.emailIsOK(email));
+        p.set_email(email);
         boolean uebereinstimmung = false;
         String pw1 = null;
         do {
@@ -48,7 +49,7 @@ public class Login {
                 out.println("Passwort stimmt nicht überein. Geben Sie es erneut ein!");
             }
         } while (uebereinstimmung == false);
-        main.p.set_passwort(pw1);
+        p.set_passwort(pw1);
 
         char auswahlAdresse;
         do {
@@ -56,7 +57,7 @@ public class Login {
             auswahlAdresse = reader.next().charAt(0);
             switch (auswahlAdresse) {
                 case 'j':
-                    main.p.add_Adresse(adresseEingeben());
+                    p.add_Adresse(adresseEingeben());
                     break;
                 case 'n':
                     break;
@@ -64,7 +65,7 @@ public class Login {
                     break;
             }
         } while (auswahlAdresse != 'n');
-        FileIOManagement.personAbspeichern(main.p);
+        FileIOManagement.personAbspeichern(p);
     }
 
     public static Adresse adresseEingeben() {
@@ -95,13 +96,13 @@ public class Login {
                 out.print("Bitte geben Sie Ihr Passwort ein: ");
                 pw = reader.next();
             } while (!pwIsAvailable(pw));
-        } while (!loginSuccesful(main.p));
+        } while (!loginSuccesful(p));
     }
 
     public static boolean emailIsAvailable(String email) {
         for (Person u : FileIOManagement.people) {
             if (u.get_email().equals(email)) {
-                main.p = u;
+                p = u;
                 return true;
             }
         }
@@ -109,7 +110,7 @@ public class Login {
     }
 
     public static boolean pwIsAvailable(String pw) {
-        if (main.p.get_passwort().equals(pw)) {
+        if (p.get_passwort().equals(pw)) {
             return true;
         }
         return false;

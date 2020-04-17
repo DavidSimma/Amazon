@@ -25,7 +25,7 @@ public class Mail {
         Authenticator auth = new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(main.p.get_nachname(), main.p.get_passwort());
+                return new PasswordAuthentication(Login.p.get_nachname(), Login.p.get_passwort());
             }
         };
 
@@ -48,7 +48,7 @@ public class Mail {
         msg.setText(message, "UTF-8");
         msg.setSentDate(new Date());
 
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(main.p.get_email(), false));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(Login.p.get_email(), false));
         System.out.println("Versende Email ...");
         System.out.println("Email konnte NICHT versendet werden!");
         /*

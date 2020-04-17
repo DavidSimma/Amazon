@@ -10,7 +10,6 @@ public class main {
 
     private static Scanner reader = new Scanner(System.in).useDelimiter("\\n");
     private static Shop shop = new Shop();
-    public static Person p = new Person();
     private static Mail mail = new Mail();
     private static final String peopleFileName = "people.bin";
 
@@ -95,8 +94,8 @@ public class main {
                         switch (answer) {
                             case 'w':
 
-                                out.println(p.get_warenkorb());
-                                out.println(p.get_warenkorb().getWaren());
+                                out.println(Login.p.get_warenkorb());
+                                out.println(Login.p.get_warenkorb().getWaren());
                                 do {
                                     out.println("b ... Bestellvorgang");
                                     out.println("x ... Warenkorb verlassen");
@@ -113,7 +112,7 @@ public class main {
                                             } catch (Exception e) {
                                                 out.println("Bestellvorgang fehlgeschlagen");
                                             }
-                                            p.get_warenkorb().getWaren().clear();
+                                            Login.p.get_warenkorb().getWaren().clear();
                                             out.println("Ihr Warenkorb wurde erfolgreich gelöscht!");
 
                                             FileIOManagement.personAbspeichern();
@@ -161,8 +160,8 @@ public class main {
                     } while (answer != 'z');
                     break;
                 case 'w':
-                    out.println(p.get_warenkorb().toString());
-                    out.println(p.get_warenkorb().getWaren().toString());
+                    out.println(Login.p.get_warenkorb().toString());
+                    out.println(Login.p.get_warenkorb().getWaren().toString());
 
                     break;
                 case 'l':
@@ -171,7 +170,7 @@ public class main {
                         löschen = reader.next().toLowerCase().charAt(0);
                         switch (löschen) {
                             case 'j':
-                                FileIOManagement.people.remove(p);
+                                FileIOManagement.people.remove(Login.p);
                                 answer = 'e';
                                 break;
                             case 'n':

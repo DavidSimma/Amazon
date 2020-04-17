@@ -99,12 +99,12 @@ public class Shop implements Serializable {
     }
 
     public Person get_aktuellePerson() {
-        return main.p;
+        return Login.p;
     }
 
     public void wareInWarenkorbVerschieben(String warenName, int menge) {
         boolean inWarenKorbVorhanden = false;
-        for (Warenkorbeintrag wke : main.p.get_warenkorb().getWaren()) {
+        for (Warenkorbeintrag wke : Login.p.get_warenkorb().getWaren()) {
             if (wke.get_ware().get_name().equals(warenName)) {
 
                 wke.set_menge(wke.get_menge() + menge);
@@ -115,7 +115,7 @@ public class Shop implements Serializable {
             for (Ware w : waren) {
                 if (w.get_name().equals(warenName)) {
 
-                    main.p.get_warenkorb().getWaren().add(new Warenkorbeintrag(menge, w));
+                    Login.p.get_warenkorb().getWaren().add(new Warenkorbeintrag(menge, w));
                 }
             }
         }
@@ -123,7 +123,7 @@ public class Shop implements Serializable {
     }
 
     public void wareAusWarenkorbEntfernen(String warenName, int menge) {
-        for (Warenkorbeintrag wke : main.p.get_warenkorb().getWaren()) {
+        for (Warenkorbeintrag wke : Login.p.get_warenkorb().getWaren()) {
             if (wke.get_ware().equals(wke)) {
                 wke.set_menge(wke.get_menge() + menge);
             } else {
